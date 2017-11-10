@@ -15,6 +15,7 @@ import com.mendix.systemwideinterfaces.core.IMendixObject;
 import com.mendix.systemwideinterfaces.core.IFeedback.MessageType;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
+import com.mendix.webui.FeedbackHelper;
 
 public class ExecuteDynamicRequestInComingMicroflow extends CustomJavaAction<java.lang.Boolean>
 {
@@ -56,7 +57,7 @@ public class ExecuteDynamicRequestInComingMicroflow extends CustomJavaAction<jav
 				Core.execute(getContext(), MicroflowName);
 			}
 		} catch (CoreException e) {
-			this.addTextMessageFeedback(MessageType.WARNING, "Failed to execute dynamic request microflow " + MicroflowName + ", check the log for details", false);
+			FeedbackHelper.addTextMessageFeedback(getContext(), MessageType.WARNING, "Failed to execute dynamic request microflow " + MicroflowName + ", check the log for details", false);
 			Core.getLogger("Interface").error("Failed to execute dynamic request microflow " + MicroflowName, e);
 			return false;
 		}

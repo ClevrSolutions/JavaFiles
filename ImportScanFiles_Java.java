@@ -22,6 +22,7 @@ import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.systemwideinterfaces.core.IFeedback;
 import com.mendix.systemwideinterfaces.core.IMendixObject;
 import com.mendix.webui.CustomJavaAction;
+import com.mendix.webui.FeedbackHelper;
 
 public class ImportScanFiles_Java extends CustomJavaAction<java.util.List<IMendixObject>>
 {
@@ -41,11 +42,11 @@ public class ImportScanFiles_Java extends CustomJavaAction<java.util.List<IMendi
 
 		// BEGIN USER CODE
 		if (ImportExportSettingParameter1==null) {
-			addTextMessageFeedback(IFeedback.MessageType.ERROR, "Please contact your administrator. Settings empty.", true);
+			FeedbackHelper.addTextMessageFeedback(getContext(), IFeedback.MessageType.ERROR, "Please contact your administrator. Settings empty.", true);
 			return null;
 		}
 		if (ImportExportSettingParameter1.getUseZip() && !ImportExportSettingParameter1.getHasContents()) {
-			addTextMessageFeedback(IFeedback.MessageType.ERROR, "Please select and upload a file first. Use save to upload.", true);
+			FeedbackHelper.addTextMessageFeedback(getContext(), IFeedback.MessageType.ERROR, "Please select and upload a file first. Use save to upload.", true);
 			return null;
 		}
 		IContext context = this.getContext();
@@ -72,7 +73,7 @@ public class ImportScanFiles_Java extends CustomJavaAction<java.util.List<IMendi
 				if (!rootDir.isDirectory()) {
 					String errorStr = "Cannot verify the root folder '"+RootFolder+"' for exporting ";
 					Core.getLogger("ImportScanFiles").error(errorStr);
-					addTextMessageFeedback(IFeedback.MessageType.ERROR, errorStr, true);
+					FeedbackHelper.addTextMessageFeedback(getContext(), IFeedback.MessageType.ERROR, errorStr, true);
 				} else {
 					Core.getLogger("ImportScanFiles").trace("root folder '" + RootFolder+ "' verified.");
 				}
@@ -85,17 +86,17 @@ public class ImportScanFiles_Java extends CustomJavaAction<java.util.List<IMendi
 		} catch (IOException e) {
 			String errorStr = e.getMessage();
 				Core.getLogger("ImportScanFiles").error(errorStr);
-				addTextMessageFeedback(IFeedback.MessageType.ERROR, errorStr, true);
+				FeedbackHelper.addTextMessageFeedback(getContext(), IFeedback.MessageType.ERROR, errorStr, true);
 				return null;
 		} catch (SecurityException e) {
 			String errorStr = e.getMessage();
 				Core.getLogger("ImportScanFiles").error(errorStr);
-				addTextMessageFeedback(IFeedback.MessageType.ERROR, errorStr, true);
+				FeedbackHelper.addTextMessageFeedback(getContext(), IFeedback.MessageType.ERROR, errorStr, true);
 				return null;
 		} catch (CoreException e) {
 			String errorStr = e.getMessage();
 				Core.getLogger("ImportScanFiles").error(errorStr);
-				addTextMessageFeedback(IFeedback.MessageType.ERROR, errorStr, true);
+				FeedbackHelper.addTextMessageFeedback(getContext(), IFeedback.MessageType.ERROR, errorStr, true);
 				return null;
 		}
 		return result;
