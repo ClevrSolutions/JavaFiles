@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 import queryrequests.proxies.SourceData;
 import com.mendix.core.Core;
-import com.mendix.core.objectmanagement.MendixIdentifier;
+import com.mendix.systemwideinterfaces.core.IMendixIdentifier;
 import com.mendix.systemwideinterfaces.connectionbus.data.IDataRow;
 import com.mendix.systemwideinterfaces.connectionbus.data.IDataTable;
 import com.mendix.systemwideinterfaces.core.IContext;
@@ -63,7 +63,7 @@ public class GetSelectableObjectValues extends CustomJavaAction<java.util.List<I
 		IDataTable oqlResults = Core.retrieveOQLDataTable(myContext, oqlquery);
 		for (IDataRow dataRow:oqlResults.getRows()) {
 			SourceData sourceData = new SourceData(myContext);			
-			MendixIdentifier id = dataRow.getValue(myContext, 0);
+			IMendixIdentifier id = dataRow.getValue(myContext, 0);
 			sourceData.setObjectID(Long.toString(id.toLong()));
 			if(refType == IMetaPrimitive.PrimitiveType.DateTime) {
 				sourceData.setValue_DateTime((Date) dataRow.getValue(myContext, 1));
