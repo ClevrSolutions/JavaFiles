@@ -15,6 +15,7 @@ import com.mendix.core.Core;
 import com.mendix.systemwideinterfaces.core.IMendixObject;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
+import com.mendix.webui.FeedbackHelper;
 
 public class CopyToDataPatchRecord extends CustomJavaAction<java.lang.Boolean>
 {
@@ -38,14 +39,14 @@ public class CopyToDataPatchRecord extends CustomJavaAction<java.lang.Boolean>
 		Core.getLogger("CopyToDataPatchRecordList").trace("CopyToDataPatchRecord: Starting with "+AnyObject.getType()+" ID "+AnyObject.getId().toLong());
 
 		DataPatchRecord dataPatchRecord = nl.mansystems.mendiximportexport.ExportToExcelWithContents.insertOrUpdateDataPatchRecordByRealObject(this.getContext(), AnyObject, DataPatchSetParameter1);
-		if (dataPatchRecord!=null) this.addRefreshObjectFeedback(dataPatchRecord.getMendixObject().getId());
+		if (dataPatchRecord!=null) FeedbackHelper.addRefreshObjectFeedback(getContext(), dataPatchRecord.getMendixObject().getId());
 
 		List<IMendixObject> iMendixObjectList =  nl.mansystems.mendiximportexport.ExportToExcelWithContents.getRelatedObjects(this.getContext(), AnyObject.getType(),  AnyObject.getId().toLong(), 0);
 		if (iMendixObjectList!=null) {
 			Core.getLogger("CopyToDataPatchRecordList").trace("CopyToDataPatchRecord: Sub records: " + iMendixObjectList.size());
 			for (IMendixObject iMendixObject:iMendixObjectList) {
 				DataPatchRecord dataPatchChildRecord = nl.mansystems.mendiximportexport.ExportToExcelWithContents.insertOrUpdateDataPatchRecordByRealObject(this.getContext(), iMendixObject, DataPatchSetParameter1);						
-				if (dataPatchChildRecord!=null) this.addRefreshObjectFeedback(dataPatchChildRecord.getMendixObject().getId());
+				if (dataPatchChildRecord!=null) FeedbackHelper.addRefreshObjectFeedback(getContext(), dataPatchChildRecord.getMendixObject().getId());
 			}
 		}
 		return true;

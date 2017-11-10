@@ -20,6 +20,7 @@ import nl.mansystems.audit.AuditFunctions;
 import nl.mansystems.mendiximportexport.SharedFunctions;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
+import com.mendix.webui.FeedbackHelper;
 
 public class CopyToDataPatchRecordList extends CustomJavaAction<java.lang.Boolean>
 {
@@ -54,14 +55,14 @@ public class CopyToDataPatchRecordList extends CustomJavaAction<java.lang.Boolea
 			ImportActionEnum importActionEnum = nl.mansystems.mendiximportexport.ExportToExcelWithContents.getActionEnumByAudit(this.getContext(), dumpDate,	true, auditRecord, true);
 			if (importActionEnum!=null) {
 				DataPatchRecord dataPatchRecord = nl.mansystems.mendiximportexport.ExportToExcelWithContents.insertOrUpdateDataPatchRecordByAudit(this.getContext(), auditRecord, DataPatchSetParameter1, importActionEnum);
-				if (dataPatchRecord!=null) this.addRefreshObjectFeedback(dataPatchRecord.getMendixObject().getId());
+				if (dataPatchRecord!=null) FeedbackHelper.addRefreshObjectFeedback(getContext(), dataPatchRecord.getMendixObject().getId());
 				if (!importActionEnum.equals(ImportActionEnum.Delete)) {
 					List<IMendixObject> iMendixObjectList =  nl.mansystems.mendiximportexport.ExportToExcelWithContents.getRelatedObjects(this.getContext(), auditRecord.getEntityName(),  auditRecord.getMendixID(), 0);
 					if (iMendixObjectList!=null) for (IMendixObject iMendixObject:iMendixObjectList) {
 						AuditRecord auditChildRecord = AuditFunctions.findAuditRecord(this.getContext(), SharedFunctions.getEntityInfo(this.getContext(), iMendixObject.getType(),0), iMendixObject, "find audit of related record in export", false);
 						ImportActionEnum importChildActionEnum = nl.mansystems.mendiximportexport.ExportToExcelWithContents.getActionEnumByAudit(this.getContext(), dumpDate,	true, auditChildRecord, true);
 						DataPatchRecord dataPatchChildRecord = nl.mansystems.mendiximportexport.ExportToExcelWithContents.insertOrUpdateDataPatchRecordByAudit(this.getContext(), auditChildRecord, DataPatchSetParameter1, importChildActionEnum);						
-						if (dataPatchChildRecord!=null) this.addRefreshObjectFeedback(dataPatchChildRecord.getMendixObject().getId());
+						if (dataPatchChildRecord!=null) FeedbackHelper.addRefreshObjectFeedback(getContext(), dataPatchChildRecord.getMendixObject().getId());
 					}
 				}
 				
