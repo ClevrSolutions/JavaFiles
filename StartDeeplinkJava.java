@@ -11,13 +11,12 @@ package deeplink.actions;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 import com.mendix.core.Core;
 import com.mendix.core.CoreException;
 import com.mendix.externalinterface.connector.RequestHandler;
@@ -47,7 +46,7 @@ public class StartDeeplinkJava extends CustomJavaAction<java.lang.Boolean>
 	public java.lang.Boolean executeAction() throws Exception
 	{
 		// BEGIN USER CODE
-		Core.addRequestHandler(deeplink.proxies.constants.Constants.getRequestHandlerName()+ "/", new DeepLinkHandler());
+		Core.addRequestHandler("link/", new DeepLinkHandler());
 		return true;
 		// END USER CODE
 	}
@@ -189,10 +188,11 @@ public class StartDeeplinkJava extends CustomJavaAction<java.lang.Boolean>
 				return;
 			}
 
-			String userAgent = request.getHeader("user-agent");
-			if (userAgent != null && session != null) {
-				session.setUserAgent(userAgent);
-			}
+			// String userAgent = request.getHeader("user-agent");
+			// if (userAgent != null && session != null) {
+			// 	session.setUserAgent(userAgent);
+			// }
+			// Code is not used
 			
 			//switch to the users context
 			context = session.createContext(); 
@@ -329,7 +329,7 @@ public class StartDeeplinkJava extends CustomJavaAction<java.lang.Boolean>
 				url = url.substring(1);
 			}
 			if (qs != null && !qs.equals("")) {
-			    url = url + "?" + URLEncoder.encode(qs, "UTF-8");
+			    url = url + "?" + qs;
 			}
 				
 			//use alternative login?
@@ -375,7 +375,7 @@ public class StartDeeplinkJava extends CustomJavaAction<java.lang.Boolean>
 			if (params != null)
 				for(String key : params.keySet())
 					if (params.get(key) != null)
-						line = line.replaceAll("\\{"+key.toUpperCase()+"\\}", Matcher.quoteReplacement(StringEscapeUtils.escapeHtml4(params.get(key))));
+						line = line.replaceAll("\\{"+key.toUpperCase()+"\\}", Matcher.quoteReplacement(StringEscapeUtils.escapeHtml(params.get(key))));
 			return line;
 		}	
 	}
