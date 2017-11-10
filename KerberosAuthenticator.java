@@ -263,7 +263,7 @@ public class KerberosAuthenticator extends RequestHandler
 	}
 	
 	private void setCookies(IMxRuntimeResponse response, ISession session) {
-		response.addCookie(XAS_SESSION_ID, session.getId().toString(),  "/", "", -1, true);
+		response.addCookie(getSessionCookieName(), session.getId().toString(),  "/", "", -1, true);
 		response.addCookie(XAS_ID, "0."+Core.getXASId(),"/", "", -1, true);			 
 	}
 	
