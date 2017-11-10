@@ -45,7 +45,7 @@ public class RunOQL extends CustomJavaAction<java.lang.String>
 			rowResultShort.append("Row " + j + ": ");
 			for (int i=0;i<iDataTable.getSchema().getColumnCount();i++) {
 				String columnName = iDataTable.getSchema().getColumnSchema(i).getName();
-				String columnType = (iDataTable.getSchema().getColumnSchema(i).getMetaPrimitive()==null?"NULL-TYPE":iDataTable.getSchema().getColumnSchema(i).getMetaPrimitive().getName());
+				String columnType = (iDataTable.getSchema().getColumnSchema(i)==null?"NULL-TYPE":iDataTable.getSchema().getColumnSchema(i).getName());
 				Object object = dataRow.getValue(context, i);
 				rowResultFull.append("Column ").append(columnName).append(" of type ").append(columnType).append(" has value '").append(object==null?"NULL":object.toString()).append("'.\n");
 				rowResultShort.append(object==null?"NULL":object.toString()).append("; ");
