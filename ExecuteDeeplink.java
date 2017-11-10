@@ -8,8 +8,6 @@
 // Special characters, e.g., é, ö, à, etc. are supported in comments.
 
 package deeplink.actions;
-
-import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -78,7 +76,6 @@ public class ExecuteDeeplink extends CustomJavaAction<java.lang.Boolean>
                     Map<String, Object> args = new HashMap<String, Object>();
                     String allArguments = this.pendinglink.getStringArgument();
                     
-                    allArguments = URLDecoder.decode(allArguments,"UTF-8");
                     // If we should separate the GET params, and there is at least one, process them
                     if (link.getSeparateGetParameters() && (allArguments.contains("=") || allArguments.contains("&"))) {
                         String[] arguments = allArguments.split("&");
