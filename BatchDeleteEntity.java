@@ -16,6 +16,7 @@ import com.mendix.core.Core;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.systemwideinterfaces.core.IMendixObject;
 import com.mendix.webui.CustomJavaAction;
+import com.mendix.webui.FeedbackHelper;
 
 public class BatchDeleteEntity extends CustomJavaAction<java.lang.Boolean>
 {
@@ -45,7 +46,7 @@ public class BatchDeleteEntity extends CustomJavaAction<java.lang.Boolean>
         	result = true;
         }
 
-        this.addRefreshClass(EntityName);
+        FeedbackHelper.addRefreshClass(getContext(), EntityName);
         Core.getLogger("BatchDeleteEntity").info("Batch Deleted entity " + EntityName);
         return result;
 		// END USER CODE
