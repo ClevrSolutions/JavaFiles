@@ -25,15 +25,15 @@ public class Java_GetDTAP extends CustomJavaAction<java.lang.String>
 	public java.lang.String executeAction() throws Exception
 	{
 		// BEGIN USER CODE
-		if (Core.getConfiguration().getDTAPMode().toString().equals("DEVELOPMENT")) {
+		if (Core.getConfiguration().isInDevelopment()) {
 			return DTAP_Enum.Development.toString();
-		} else if (Core.getConfiguration().getDTAPMode().toString().equals("TESTING")) {
-			return DTAP_Enum.Test.toString();
-		} else  if (Core.getConfiguration().getDTAPMode().toString().equals("ACCEPTANCE")) {
+		} else if (!Core.getConfiguration().isInDevelopment()) { // Not sure other options that are not in development will be tested
+			return DTAP_Enum.Test.toString();					// This might not be the right fix
+		} else  if (!Core.getConfiguration().isInDevelopment()) {
 			return DTAP_Enum.Acceptance.toString();
-		} else  if (Core.getConfiguration().getDTAPMode().toString().equals("PRODUCTION")) {
+		} else  if (!Core.getConfiguration().isInDevelopment()) {
 			return DTAP_Enum.Production.toString();
-		} else if (Core.getConfiguration().getDTAPMode().toString().equals("TRIAL")) {
+		} else if (!Core.getConfiguration().isInDevelopment()) {
 			return DTAP_Enum.Test.toString();
 		} else {
 			return null;
