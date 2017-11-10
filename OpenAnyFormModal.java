@@ -12,6 +12,7 @@ package usermenu.actions;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.systemwideinterfaces.core.IFeedback;
 import com.mendix.webui.CustomJavaAction;
+import com.mendix.webui.FeedbackHelper;
 
 /**
  * v1.0: First version
@@ -38,7 +39,7 @@ public class OpenAnyFormModal extends CustomJavaAction<java.lang.Boolean>
 	public java.lang.Boolean executeAction() throws Exception
 	{
 		// BEGIN USER CODE
-		addOpenFormFeedback(MendixFormString, IFeedback.FormTarget.MODAL);
+		FeedbackHelper.addOpenFormFeedback(getContext(),MendixFormString, IFeedback.FormTarget.MODAL);
 		
 		return true;
 		// END USER CODE

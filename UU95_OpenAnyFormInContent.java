@@ -12,6 +12,7 @@ package usermenu.actions;
 import com.mendix.systemwideinterfaces.core.IFeedback;
 import com.mendix.systemwideinterfaces.core.IContext;
 import com.mendix.webui.CustomJavaAction;
+import com.mendix.webui.FeedbackHelper;
 
 /**
  * v1.0: First version
@@ -38,7 +39,7 @@ public class UU95_OpenAnyFormInContent extends CustomJavaAction<Boolean>
 	public Boolean executeAction() throws Exception
 	{
 		// BEGIN USER CODE
-		addOpenFormFeedback(MendixFormString, IFeedback.FormTarget.CONTENT);
+		FeedbackHelper.addOpenFormFeedback(getContext(), MendixFormString, IFeedback.FormTarget.CONTENT);
 		
 		return true;
 		// END USER CODE
