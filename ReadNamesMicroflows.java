@@ -54,7 +54,7 @@ public class ReadNamesMicroflows extends CustomJavaAction<java.lang.Boolean>
 	public void removeAll(String type) throws CoreException {
 		List<IMendixObject> objs = Core.retrieveXPathQuery(getContext(), "//" + type);
 		for(IMendixObject obj : objs)
-			Core.remove(getContext(), obj);
+			Core.delete(getContext(), obj);
 			
 	}
 	// END EXTRA CODE
